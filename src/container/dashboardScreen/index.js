@@ -1,28 +1,30 @@
 import React from 'react';
-import {View,Text, StyleSheet, Image} from 'react-native';
+import {View,Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import {Actions} from 'react-native-router-flux';
 import Header from '../../components/Header';
-import ticketIcon from '../../assests/images/tickets.png'
-import trackingIcon from '../../assests/images/tracking.png'
-import travelHistoryIcon from '../../assests/images/history.png'
-import profileIcon from '../../assests/images/profile.png'
-import walletIcon from '../../assests/images/wallet.png'
+import ticketIcon from '../../assests/images/tickets.png';
+import trackingIcon from '../../assests/images/tracking.png';
+import travelHistoryIcon from '../../assests/images/history.png';
+import profileIcon from '../../assests/images/profile.png';
+import walletIcon from '../../assests/images/wallet.png';
 
-export default class DashboardScreen extends React.Component {
+class DashboardScreen extends React.Component {
     render(){
         return (
             <View style={styles.container}>
                 <Header title={"Dashboard"} />
                 <View style={styles.infoContainer}>
                     <View style={styles.infoLeftContainer}>
-                        <Text style={styles.userNameStyle}>Sudarsan T J</Text>
+                        <Text style={styles.userNameStyle}>{this.props.userDetails.fullName}</Text>
                     </View>
-                    <View style={styles.infoRightContainer}>
+                    <TouchableOpacity style={styles.infoRightContainer} onPress={()=>Actions.walletScreen()}>
                         <Image source={walletIcon}  style={{height: 20, width: 20}}/>
-                        <Text>₹ 100.00</Text>
-                    </View>
+                        <Text style={{color: 'black'}}>₹ {this.props.userDetails.walletAmount}</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.body}>
-                    <View style={styles.itemContainer}>
+                    <TouchableOpacity onPress={()=>Actions.ticketsScreen()} style={styles.itemContainer}>
                         <View style={styles.itemLeft}>
                             <Image source={ticketIcon} style={styles.imageStyle}/> 
                         </View>
@@ -30,8 +32,8 @@ export default class DashboardScreen extends React.Component {
                             <Text style={styles.optionTitle}>Tickets</Text>
                             <Text>Buy e-Tickets</Text>
                         </View>
-                    </View>
-                    <View style={styles.itemContainer}>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>Actions.trackBusScreen()} style={styles.itemContainer}>
                         <View style={styles.itemLeft}>
                             <Image source={trackingIcon} style={styles.imageStyle}/> 
                         </View>
@@ -39,8 +41,8 @@ export default class DashboardScreen extends React.Component {
                             <Text style={styles.optionTitle}>Track Bus</Text>
                             <Text>View Real-time Location of the Buses Near to You</Text>
                         </View>
-                    </View>
-                    <View style={styles.itemContainer}>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>Actions.travelHistoryScreen()} style={styles.itemContainer}>
                         <View style={styles.itemLeft}>
                             <Image source={travelHistoryIcon} style={styles.imageStyle}/> 
                         </View>
@@ -48,8 +50,8 @@ export default class DashboardScreen extends React.Component {
                             <Text style={styles.optionTitle}>Travel History</Text>
                             <Text>View Your Ticket and Travel History</Text>
                         </View>
-                    </View>
-                    <View style={styles.itemContainer}>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>Actions.profileScreen()} style={styles.itemContainer}>
                         <View style={styles.itemLeft}>
                             <Image source={profileIcon} style={styles.imageStyle}/> 
                         </View>
@@ -57,7 +59,7 @@ export default class DashboardScreen extends React.Component {
                             <Text style={styles.optionTitle}>Profile</Text>
                             <Text>View and Edit Your Details</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -124,3 +126,10 @@ const styles = StyleSheet.create({
         width: 60
     }
 })
+
+
+const mapStateToProps = (state)=>({
+    userDetails: state.userDetails
+})
+
+export default connect(mapStateToProps)(DashboardScreen);

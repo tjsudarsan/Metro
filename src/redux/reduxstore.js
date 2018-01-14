@@ -4,7 +4,7 @@ import userReducer from './userReducer';
 export default () => {
     const store = createStore(
         combineReducers({
-            userData: userReducer
+            userDetails: userReducer
         })
     )
 

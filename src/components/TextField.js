@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, StyleSheet} from 'react-native';
 
-export default TextField = ({placeholderTextColor,maxLength, keyboardType, placeholder, underlineColorAndroid, secureTextEntry}) => {
+export default TextField = ({onEndEditing,onChangeText, placeholderTextColor,maxLength, keyboardType, placeholder, underlineColorAndroid, secureTextEntry}) => {
     const styles = StyleSheet.create({
         textFieldStyle : {
             width: 250,
@@ -11,6 +11,8 @@ export default TextField = ({placeholderTextColor,maxLength, keyboardType, place
     })
     return (
         <TextInput 
+            onEndEditing={onEndEditing}
+            onChangeText={onChangeText}
             style={styles.textFieldStyle}
             underlineColorAndroid={underlineColorAndroid}
             secureTextEntry={secureTextEntry}
