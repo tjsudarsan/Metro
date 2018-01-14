@@ -28,7 +28,7 @@ export default class DashboardScreen extends React.Component {
                         </View>
                         <View style={styles.itemRight}>
                             <Text style={styles.optionTitle}>Tickets</Text>
-                            <Text>Buy e-Tickets and Travel Hassle Free</Text>
+                            <Text>Buy e-Tickets</Text>
                         </View>
                     </View>
                     <View style={styles.itemContainer}>
@@ -37,7 +37,7 @@ export default class DashboardScreen extends React.Component {
                         </View>
                         <View style={styles.itemRight}>
                             <Text style={styles.optionTitle}>Track Bus</Text>
-                            <Text>View Real-time Location of the Buses Nearer to You</Text>
+                            <Text>View Real-time Location of the Buses Near to You</Text>
                         </View>
                     </View>
                     <View style={styles.itemContainer}>
