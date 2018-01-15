@@ -1,48 +1,52 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
+import {loadUserDetails} from '../../redux/actions'
+import {userLogin} from '../../services'
 import PrimaryButton from '../../components/PrimaryButton';
 import TextField from '../../components/TextField'
 import welcomeScreenBg from '../../assests/images/welcomescreenbg.jpg';
 
-export default class LoginScreen extends React.Component {
+class LoginScreen extends React.Component {
+    constructor(){
+        super();
+
+        this.state= {
+            userName: '',
+            password: ''
+        }
+    }
+
+    handleLogin(){
+        if(this.state.userName !== '' && this.state.password !== ''){
+            userLogin({
+                userName: this.state.userName,
+                password: this.state.password
+            }).then((res)=>{
+                if(res.error){
+                    Alert.alert(
+                        'Login Unsuccessful',
+                        res.error,
+                        [{text: 'Ok'}],
+                        {clickable: false}
+                    )
+                }else{
+                    this.props.dispatch(loadUserDetails({...res, isLoggedIn: true}));
+                    Actions.main();
+                }
+            })
+        }else{
+            Alert.alert(
+                'Attention',
+                'Please Provide Username and Password',
+                [{text: 'Ok'}],
+                {clickable: false}
+            )
+        }
+    }
 
     render(){
-        const styles = StyleSheet.create({
-                backgroundImage: {
-                    flex: 1
-                },
-                contentContainer:{
-                    flex: 1,
-                    backgroundColor: 'rgba(0,0,0,0.6)'
-                },
-                logoContainer:{
-                    alignItems: 'center',
-                    marginTop: '20%'
-                },
-                logoText: {
-                    fontSize: 50,
-                    color: 'black',
-                    fontWeight: 'bold',
-                    color: 'white',
-                    borderBottomWidth: 1,
-                    borderBottomColor: 'white'
-                },
-                loginButtonContainer:{
-                    alignItems: 'center',
-                    marginTop: '5%'
-                },
-                textFieldContainer:{
-                    alignItems: 'center',
-                    marginTop: '5%'
-                },
-                newUserText:{
-                    textAlign: 'center',
-                    marginTop: '5%',
-                    color: 'white'
-                }
-            });
-
         return (
             <ImageBackground imageStyle={{resizeMode: 'cover'}} style={styles.backgroundImage} source={welcomeScreenBg}>
                 <View style={styles.contentContainer}>
@@ -56,6 +60,7 @@ export default class LoginScreen extends React.Component {
                             placeholder="Username"
                             underlineColorAndroid="white"
                             placeholderTextColor="white"
+                            onChangeText={(e)=>this.setState({userName: e})}
                         />
                     </View>
                     <View style={styles.textFieldContainer}>
@@ -63,11 +68,12 @@ export default class LoginScreen extends React.Component {
                             placeholder="Password"
                             underlineColorAndroid="white" 
                             placeholderTextColor="white"
+                            onChangeText={(e)=>this.setState({password: e})}
                             secureTextEntry
                         />
                     </View>
                     <View style={styles.loginButtonContainer}>
-                        <PrimaryButton label={"Login"} />
+                        <PrimaryButton onPress={this.handleLogin.bind(this)} label={"Login"} />
                     </View>
                     <Text style={styles.newUserText}>New User? <Text onPress={() => Actions.registerScreen()} style={{fontWeight: 'bold',textDecorationLine: 'underline'}}>SignUp</Text></Text>
                 </View>
@@ -75,3 +81,45 @@ export default class LoginScreen extends React.Component {
         );  
     }
 }
+
+const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1
+    },
+    contentContainer:{
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.6)'
+    },
+    logoContainer:{
+        alignItems: 'center',
+        marginTop: '20%'
+    },
+    logoText: {
+        fontSize: 50,
+        color: 'black',
+        fontWeight: 'bold',
+        color: 'white',
+        borderBottomWidth: 1,
+        borderBottomColor: 'white'
+    },
+    loginButtonContainer:{
+        alignItems: 'center',
+        marginTop: '5%'
+    },
+    textFieldContainer:{
+        alignItems: 'center',
+        marginTop: '5%'
+    },
+    newUserText:{
+        textAlign: 'center',
+        marginTop: '5%',
+        color: 'white'
+    }
+});
+
+
+const mapStateToProps = (state) => ({
+    userDetails : state.userDetails
+})
+
+export default connect(mapStateToProps)(LoginScreen);

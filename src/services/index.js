@@ -43,3 +43,16 @@ export async function userRegister(data){
 
     return result;
 }
+
+export async function userLogin(data){
+    var result = await fetch(baseURL + '/userlogin',{
+        method: "POST",
+        headers: {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(res => res.json());
+
+    return result;
+}

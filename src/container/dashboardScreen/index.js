@@ -10,6 +10,12 @@ import profileIcon from '../../assests/images/profile.png';
 import walletIcon from '../../assests/images/wallet.png';
 
 class DashboardScreen extends React.Component {
+    // componentWillMount(){
+    //     if(!this.props.userDetails.isLoggedIn){
+    //         Actions.auth();
+    //     }
+    // }
+
     render(){
         return (
             <View style={styles.container}>
