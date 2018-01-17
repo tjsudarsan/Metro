@@ -1,7 +1,7 @@
 import React from 'react';
 import {BackHandler} from 'react-native';
 import {connect} from 'react-redux';
-import { Router, Scene, Actions } from 'react-native-router-flux';
+import { Router, Scene, Actions, Switch } from 'react-native-router-flux';
 import WelcomeScreen from '../container/welcomeScreen';
 import LoginScreen from '../container/loginScreen';
 import RegisterScreen from '../container/registerScreen';
@@ -16,9 +16,12 @@ class Routes extends React.Component {
     render(){
         return (
             <Router>
-                <Scene key="root">
-                    <Scene key="main" initial={this.props.userDetails.isLoggedIn}>
-                        <Scene key="dashboardScreen" component={DashboardScreen} hideNavBar={true} initial />
+                <Scene 
+                    key="root"
+                    onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : Actions.auth() }
+                 >
+                    <Scene key="main" initial>
+                        <Scene key="dashboardScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? {} : Actions.auth() } component={DashboardScreen} hideNavBar={true} initial />
                         <Scene key="ticketsScreen" component={TicketsScreen} hideNavBar={true} />
                         <Scene key="trackBusScreen" component={TrackBusScreen} hideNavBar={true} />
                         <Scene key="travelHistoryScreen" component={TravelHistoryScreen} hideNavBar={true} />
@@ -26,10 +29,10 @@ class Routes extends React.Component {
                         <Scene key="walletScreen" component={WalletScreen} hideNavBar={true} />
                     </Scene>
                 
-                    <Scene key="auth" initial={!this.props.userDetails.isLoggedIn}>
-                        <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} initial />
-                        <Scene key="loginScreen" component={LoginScreen} hideNavBar={true} />
-                        <Scene key="registerScreen" component={RegisterScreen} hideNavBar={true} />
+                    <Scene key="auth" initial>
+                        <Scene key="welcomeScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={WelcomeScreen} hideNavBar={true} initial />
+                        <Scene key="loginScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={LoginScreen} hideNavBar={true} />
+                        <Scene key="registerScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={RegisterScreen} hideNavBar={true} />
                     </Scene>
                 </Scene>
             </Router>
