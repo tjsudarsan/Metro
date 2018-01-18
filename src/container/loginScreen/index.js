@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Alert} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Alert,ScrollView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {loadUserDetails} from '../../redux/actions'
@@ -49,7 +49,7 @@ class LoginScreen extends React.Component {
     render(){
         return (
             <ImageBackground imageStyle={{resizeMode: 'cover'}} style={styles.backgroundImage} source={welcomeScreenBg}>
-                <View style={styles.contentContainer}>
+                <ScrollView style={styles.contentContainer}>
                     <View style={styles.logoContainer}>
                         <Text style={styles.logoText}>Metro</Text> 
                         <Text style={{color: 'white'}}>Buy e-Tickets and Track Buses</Text>                   
@@ -76,7 +76,7 @@ class LoginScreen extends React.Component {
                         <PrimaryButton onPress={this.handleLogin.bind(this)} label={"Login"} />
                     </View>
                     <Text style={styles.newUserText}>New User? <Text onPress={() => Actions.registerScreen()} style={{fontWeight: 'bold',textDecorationLine: 'underline'}}>SignUp</Text></Text>
-                </View>
+                </ScrollView>
             </ImageBackground>
         );  
     }

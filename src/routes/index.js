@@ -16,12 +16,15 @@ class Routes extends React.Component {
     render(){
         return (
             <Router>
-                <Scene 
+                <Scene key="root">
+                    <Scene key="trackbus" component={TrackBusScreen} hideNavBar={true} />
+                </Scene>
+                {/* <Scene 
                     key="root"
                     onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : Actions.auth() }
                  >
                     <Scene key="main" initial>
-                        <Scene key="dashboardScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? {} : Actions.auth() } component={DashboardScreen} hideNavBar={true} initial />
+                        <Scene key="dashboardScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? {} : Actions.auth() } component={DashboardScreen} hideNavBar={true}  />
                         <Scene key="ticketsScreen" component={TicketsScreen} hideNavBar={true} />
                         <Scene key="trackBusScreen" component={TrackBusScreen} hideNavBar={true} />
                         <Scene key="travelHistoryScreen" component={TravelHistoryScreen} hideNavBar={true} />
@@ -34,7 +37,7 @@ class Routes extends React.Component {
                         <Scene key="loginScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={LoginScreen} hideNavBar={true} />
                         <Scene key="registerScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={RegisterScreen} hideNavBar={true} />
                     </Scene>
-                </Scene>
+                </Scene> */}
             </Router>
         )
     }
