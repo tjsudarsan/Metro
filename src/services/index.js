@@ -56,3 +56,19 @@ export async function userLogin(data){
 
     return result;
 }
+
+export async function listBuses(from,to){
+    var result = await fetch(baseURL + '/listbuses',{
+        method: "POST",
+        headers: {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            from,
+            to
+        })
+    }).then(res => res.json());
+
+    return result;
+}

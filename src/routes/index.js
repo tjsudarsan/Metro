@@ -16,10 +16,10 @@ class Routes extends React.Component {
     render(){
         return (
             <Router>
-                <Scene key="root">
+                {/* <Scene key="root">
                     <Scene key="trackbus" component={TrackBusScreen} hideNavBar={true} />
-                </Scene>
-                {/* <Scene 
+                </Scene> */}
+                <Scene 
                     key="root"
                     onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : Actions.auth() }
                  >
@@ -37,7 +37,7 @@ class Routes extends React.Component {
                         <Scene key="loginScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={LoginScreen} hideNavBar={true} />
                         <Scene key="registerScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={RegisterScreen} hideNavBar={true} />
                     </Scene>
-                </Scene> */}
+                </Scene>
             </Router>
         )
     }
