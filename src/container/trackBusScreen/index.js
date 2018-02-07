@@ -216,9 +216,8 @@ class TrackBusScreen extends React.Component {
                                 longitude: this.state.selectedBusDetails.longitude
                             }}
                             title={this.state.selectedBusDetails.busNo}
-                            description={`Distance: ${this.state.selectedBusDetails.distance} and Time: ${this.state.selectedBusDetails.time}`}
                         >
-                        <Image source={busIcon} style={{width: 30, height: 30, marginTop:10,marginLeft:5}} />
+                        <Image source={busIcon} style={{width: 30, height: 30}} />
                         </MapView.Marker> 
                     : null}
                 </MapView>

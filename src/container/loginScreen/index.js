@@ -49,7 +49,7 @@ class LoginScreen extends React.Component {
     render(){
         return (
             <ImageBackground imageStyle={{resizeMode: 'cover'}} style={styles.backgroundImage} source={welcomeScreenBg}>
-                <ScrollView style={styles.contentContainer}>
+                <ScrollView keyboardShouldPersistTaps="always" style={styles.contentContainer}>
                     <View style={styles.logoContainer}>
                         <Text style={styles.logoText}>Metro</Text> 
                         <Text style={{color: 'white'}}>Buy e-Tickets and Track Buses</Text>                   

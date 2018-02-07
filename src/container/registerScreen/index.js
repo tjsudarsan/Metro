@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, Alert} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Alert, ScrollView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrimaryButton from '../../components/PrimaryButton';
 import TextField from '../../components/TextField';
@@ -69,7 +69,7 @@ export default class RegisterScreen extends React.Component {
     render(){
         return (
             <ImageBackground imageStyle={{resizeMode: 'cover'}} style={styles.backgroundImage} source={welcomeScreenBg}>
-                <View style={styles.contentContainer}>
+                <ScrollView keyboardShouldPersistTaps="always" contentContainerStyle={{alignItems: 'center'}} style={styles.contentContainer}>
                     <View style={styles.logoContainer}>
                         <Text style={styles.logoText}>Metro</Text>
                         <Text style={{color: 'white'}}>Buy e-Tickets and Track Buses</Text>                    
@@ -140,7 +140,7 @@ export default class RegisterScreen extends React.Component {
                     <View style={styles.registerButtonContainer}>
                         <PrimaryButton onPress={this.handleRegister.bind(this)} label={"Register"} />
                     </View>
-                </View>
+                </ScrollView>
             </ImageBackground>
         );  
     }
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     contentContainer:{
         flex: 1,
         backgroundColor: 'rgba(0,0,0,0.6)',
-        alignItems: 'center'
+        // alignItems: 'center'
     },
     logoContainer:{
         alignItems: 'center',
