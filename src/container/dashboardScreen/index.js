@@ -24,7 +24,7 @@ class DashboardScreen extends React.Component {
                     <View style={styles.infoLeftContainer}>
                         <Text style={styles.userNameStyle}>{this.props.userDetails.fullName}</Text>
                     </View>
-                    <TouchableOpacity style={styles.infoRightContainer} onPress={()=>Actions.walletScreen()}>
+                    <TouchableOpacity activeOpacity={1} style={styles.infoRightContainer}>
                         <Image source={walletIcon}  style={{height: 20, width: 20}}/>
                         <Text style={{color: 'black'}}>₹ {this.props.userDetails.walletAmount}</Text>
                     </TouchableOpacity>
@@ -74,6 +74,7 @@ class DashboardScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'white'
     },
     userNameStyle: {
         fontSize: 20,

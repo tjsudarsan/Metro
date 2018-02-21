@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Alert,ScrollView} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Alert,ScrollView, ActivityIndicator} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {loadUserDetails} from '../../redux/actions'
@@ -14,12 +14,14 @@ class LoginScreen extends React.Component {
 
         this.state= {
             userName: '',
-            password: ''
+            password: '',
+            isLoading: false
         }
     }
 
     handleLogin(){
         if(this.state.userName !== '' && this.state.password !== ''){
+            this.setState({isLoading: true});
             userLogin({
                 userName: this.state.userName,
                 password: this.state.password
@@ -31,6 +33,7 @@ class LoginScreen extends React.Component {
                         [{text: 'Ok'}],
                         {clickable: false}
                     )
+                    this.setState({isLoading: false})
                 }else{
                     this.props.dispatch(loadUserDetails({...res, isLoggedIn: true}));
                     Actions.main();
@@ -61,6 +64,7 @@ class LoginScreen extends React.Component {
                             underlineColorAndroid="white"
                             placeholderTextColor="white"
                             onChangeText={(e)=>this.setState({userName: e})}
+                            autoCapitalize="none"
                         />
                     </View>
                     <View style={styles.textFieldContainer}>
@@ -72,9 +76,13 @@ class LoginScreen extends React.Component {
                             secureTextEntry
                         />
                     </View>
-                    <View style={styles.loginButtonContainer}>
-                        <PrimaryButton onPress={this.handleLogin.bind(this)} label={"Login"} />
-                    </View>
+                    {this.state.isLoading ?
+                        <ActivityIndicator size={50} color="white" />
+                        :
+                        <View style={styles.loginButtonContainer}>
+                            <PrimaryButton onPress={this.handleLogin.bind(this)} label={"Login"} />
+                        </View>
+                    }
                     <Text style={styles.newUserText}>New User? <Text onPress={() => Actions.registerScreen()} style={{fontWeight: 'bold',textDecorationLine: 'underline'}}>SignUp</Text></Text>
                 </ScrollView>
             </ImageBackground>

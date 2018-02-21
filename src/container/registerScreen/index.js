@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, Alert, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Alert, ScrollView, ActivityIndicator} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrimaryButton from '../../components/PrimaryButton';
 import TextField from '../../components/TextField';
@@ -18,14 +18,15 @@ export default class RegisterScreen extends React.Component {
             fullName: '',
             pinNumber: '',
             phoneNumber: '',
-            disabled: false
+            disabled: false,
+            isLoading: false
         }
     }
 
     handleRegister(){
-        console.log("pressed")
         if(this.state.isAadhaarExisting && !this.state.isUserNameExisting && this.state.uid.length === 12){
             if(this.state.uid !== '' && this.state.userName !== '' && this.state.password !== '' && this.state.fullName !== '' && this.state.pinNumber !== '' && this.state.phoneNumber !== ''){
+                this.setState({isLoading: true});
                 userRegister({
                     uid: this.state.uid,
                     userName: this.state.userName,
@@ -34,19 +35,22 @@ export default class RegisterScreen extends React.Component {
                     pinNumber: this.state.pinNumber,
                     phoneNumber: this.state.phoneNumber
                 }).then(res => {
-                    res.status ? 
+                    if(res.status){
+                        this.setState({isLoading:false})
                         Alert.alert(
                             'Registration Successful',
                             'Please Login to Continue',
                             [{text: 'Login', onPress: () => Actions.loginScreen()}],
                             { cancelable: false }
                         ) 
-                        : 
+                    }else{
+                        this.setState({isLoading:false})
                         Alert.alert(
                             'Something Went Wrong!',
                             res.error,
                             [{text: 'Ok'}]
                         )
+                    }
                 })
             }else{
                 Alert.alert(
@@ -137,9 +141,13 @@ export default class RegisterScreen extends React.Component {
                             onChangeText={(e)=>this.setState({phoneNumber: e})}
                         />
                     </View>
-                    <View style={styles.registerButtonContainer}>
-                        <PrimaryButton onPress={this.handleRegister.bind(this)} label={"Register"} />
-                    </View>
+                    {this.state.isLoading ?
+                        <ActivityIndicator size={50} color="white" />
+                        :
+                        <View style={styles.registerButtonContainer}>
+                            <PrimaryButton onPress={this.handleRegister.bind(this)} label={"Register"} />
+                        </View>
+                    }
                 </ScrollView>
             </ImageBackground>
         );  

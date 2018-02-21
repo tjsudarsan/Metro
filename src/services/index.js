@@ -1,4 +1,5 @@
-const baseURL = 'https://mtcticketing.herokuapp.com';
+// const baseURL = 'https://mtcticketing.herokuapp.com';
+const baseURL = 'http://192.168.43.186:4000'
 
 export async function checkAadhaar(uid){
     console.log(uid)
@@ -67,6 +68,56 @@ export async function listBuses(from,to){
         body: JSON.stringify({
             from,
             to
+        })
+    }).then(res => res.json());
+
+    return result;
+}
+
+export async function fareCalculation(from, to) {
+    var result = await fetch(baseURL + '/farecalculation',{
+        method: "POST",
+        headers: {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            from,
+            to
+        })
+    }).then(res => res.json());
+
+    return result;
+}
+
+export async function checkPIN(uid,pinNumber) {
+    var result = await fetch(baseURL + '/checkpin',{
+        method: "POST",
+        headers: {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            uid,
+            pinNumber
+        })
+    }).then(res => res.json());
+
+    return result;
+}
+
+export async function ticketGeneration(uid,from,to,fare) {
+    var result = await fetch(baseURL + '/ticketing',{
+        method: "POST",
+        headers: {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            uid,
+            from,
+            to,
+            fare
         })
     }).then(res => res.json());
 

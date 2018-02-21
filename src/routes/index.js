@@ -11,13 +11,14 @@ import WalletScreen from '../container/walletScreen';
 import TicketsScreen from '../container/ticketsScreen';
 import TrackBusScreen from '../container/trackBusScreen';
 import TravelHistoryScreen from '../container/travelHistoryScreen';
+import PINVerifyScreen from '../container/pinVerifyScreen';
 
 class Routes extends React.Component {
     render(){
         return (
             <Router>
                 {/* <Scene key="root">
-                    <Scene key="trackbus" component={TrackBusScreen} hideNavBar={true} />
+                    <Scene key="pinVerifyScreen" component={PINVerifyScreen} hideNavBar={true} />
                 </Scene> */}
                 <Scene 
                     key="root"
@@ -26,6 +27,7 @@ class Routes extends React.Component {
                     <Scene key="main" initial>
                         <Scene key="dashboardScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? {} : Actions.auth() } component={DashboardScreen} hideNavBar={true}  />
                         <Scene key="ticketsScreen" component={TicketsScreen} hideNavBar={true} />
+                        <Scene key="pinVerifyScreen" component={PINVerifyScreen} hideNavBar={true} />
                         <Scene key="trackBusScreen" component={TrackBusScreen} hideNavBar={true} />
                         <Scene key="travelHistoryScreen" component={TravelHistoryScreen} hideNavBar={true} />
                         <Scene key="profileScreen" component={ProfileScreen} hideNavBar={true} />
