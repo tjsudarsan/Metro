@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, BackHandler, TextInput, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React, { Fragment } from 'react';
+import { View, Text, StyleSheet, BackHandler, TextInput, Image, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import MapView from 'react-native-maps';
@@ -40,7 +40,8 @@ class TrackBusScreen extends React.Component {
                 // {busNo: "S553K-1", distance: 137, time: 28000},
                 // {busNo: "S525-1", distance: 13464, time: 1783000},
                 // {busNo: "S554-1", distance: 18563, time: 2169000}
-            ]
+            ],
+            isLoading: false
         }
     }
 
@@ -94,17 +95,18 @@ class TrackBusScreen extends React.Component {
                 {clickable: false}
             )
         }else if(userInput.to !== text && this.state.userInput.to !== ''){
+            this.setState({isLoading: true})
             listBuses(userInput.from,userInput.to)
                 .then(result=>{
-                    console.log(result)
-                    if(result.data.length === 0){
+                    // console.log(result)
+                    if(result.status === false){
                         Alert.alert(
                             'Attention!',
                             'No bus is available at this time. Please try after sometime.',
                             [{text: 'Ok'}]
                         )
-                        this.setState({busList: []});
-                    }else{
+                        this.setState({busList: [], isLoading: false});
+                    }else if(result.status === true){
                         var unSortedBusList = result.data;
                         unSortedBusList.sort((a,b)=>{
                             if(parseFloat(a.distance) < parseFloat(b.distance)){
@@ -115,7 +117,7 @@ class TrackBusScreen extends React.Component {
                             }
                             return 0;
                         });
-                        this.setState({busList: unSortedBusList});
+                        this.setState({busList: unSortedBusList, isLoading: false});
                     }
                 })      
         }
@@ -132,17 +134,18 @@ class TrackBusScreen extends React.Component {
                 {clickable: false}
             )
         }else if(userInput.from !== text && this.state.userInput.from !== ''){
+            this.setState({isLoading: true})
             listBuses(userInput.from,userInput.to)
                 .then(result=>{
                     console.log(result)
-                    if(result.data.length === 0){
+                    if(result.status === false){
                         Alert.alert(
                             'Attention!',
                             'No bus is available at this time. Please try after sometime.',
                             [{text: 'Ok'}]
                         )
-                        this.setState({busList: []});
-                    }else{
+                        this.setState({busList: [], isLoading: false});
+                    }else if(result.status === true){
                         var unSortedBusList = result.data;
                         unSortedBusList.sort((a,b)=>{
                             if(parseFloat(a.distance) < parseFloat(b.distance)){
@@ -153,7 +156,7 @@ class TrackBusScreen extends React.Component {
                             }
                             return 0;
                         });
-                        this.setState({busList: unSortedBusList});
+                        this.setState({busList: unSortedBusList, isLoading: false});
                     }
                 })      
         }
@@ -177,7 +180,7 @@ class TrackBusScreen extends React.Component {
         return (
             <View style={styles.container}>
                 {this.state.fromStops.length > 0 && this.state.userInput.from !== '' ?
-                    <ScrollView style={styles.fromItemsList}>
+                    <ScrollView keyboardShouldPersistTaps="always" style={styles.fromItemsList}>
                         {this.state.fromStops.map((busStop, key) => {
                             return (
                                 <TouchableOpacity onPress={() => this.handleFromSelect(busStop)} key={key} style={styles.listItem}>
@@ -188,7 +191,7 @@ class TrackBusScreen extends React.Component {
                     </ScrollView>
                     : null}
                 {this.state.toStops.length > 0 && this.state.userInput.to !== '' ?
-                    <ScrollView style={styles.toItemsList}>
+                    <ScrollView keyboardShouldPersistTaps="always" style={styles.toItemsList}>
                         {this.state.toStops.map((busStop, key) => {
                             return (
                                 <TouchableOpacity onPress={() => this.handleToSelect(busStop)} key={key} style={styles.listItem}>
@@ -247,19 +250,23 @@ class TrackBusScreen extends React.Component {
                     </View>
                 </View>
                 <View style={styles.showBuses}>
-                    
-                    {this.state.busList.length > 0 ?
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        {this.state.busList.map((bus,key)=>{
-                            return (
-                                <TouchableOpacity key={key} style={this.state.selectedBusDetails.busNo === bus.busNo ? styles.selectedBusItem : styles.busItemContainer} onPress={()=>this.handleBusSelect(bus)}>
-                                        <Text style={this.state.selectedBusDetails.busNo === bus.busNo ? {color: 'white'} : {color: '#b90000'}}>{bus.busNo}</Text>
-                                </TouchableOpacity>
-                            )
-                        })} 
-                    </ScrollView> 
-                    : <Text style={{color: '#b90000',padding:10}}>Please Select "From" and "To" to View Buses</Text>}
-                    
+                    {this.state.isLoading ? 
+                        <ActivityIndicator size={50} color="#b90000" />
+                        :
+                        <Fragment>
+                        {this.state.busList.length > 0 ?
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                {this.state.busList.map((bus,key)=>{
+                                    return (
+                                        <TouchableOpacity key={key} style={this.state.selectedBusDetails.busNo === bus.busNo ? styles.selectedBusItem : styles.busItemContainer} onPress={()=>this.handleBusSelect(bus)}>
+                                                <Text style={this.state.selectedBusDetails.busNo === bus.busNo ? {color: 'white'} : {color: '#b90000'}}>{bus.busNo}</Text>
+                                        </TouchableOpacity>
+                                    )
+                                })} 
+                            </ScrollView> 
+                            : <Text style={{color: '#b90000',padding:10}}>Please Select "From" and "To" to View Buses</Text>}
+                        </Fragment>
+                    }
                 </View>
             </View>
         );

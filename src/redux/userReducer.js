@@ -22,7 +22,13 @@ export default (state = defaultState, actions) => {
 		case 'UPDATE_TRAVEL_HISTORY':
 			travelHistory = state.travelHistory;
 			travelHistory.push(actions.payload);
-			return { ...state, travelHistory, walletAmount: actions.walletAmount }
+			return { ...state, travelHistory}
+
+		case 'UPDATE_WALLET_AMOUNT':
+			return {...state, walletAmount: actions.payload}
+
+		case 'TICKETS_UPDATE':
+			return {...state, travelHistory: actions.payload}
 
         default:
             return state;

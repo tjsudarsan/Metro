@@ -123,3 +123,18 @@ export async function ticketGeneration(uid,from,to,fare) {
 
     return result;
 }
+
+export async function updateTravelHistory(uid) {
+    var result = await fetch(baseURL + '/travelhistory',{
+        method: "POST",
+        headers: {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            uid
+        })
+    }).then(res => res.json());
+
+    return result;
+}

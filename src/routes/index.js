@@ -13,12 +13,23 @@ import TrackBusScreen from '../container/trackBusScreen';
 import TravelHistoryScreen from '../container/travelHistoryScreen';
 import PINVerifyScreen from '../container/pinVerifyScreen';
 
+import {updateTravelHistory} from '../services'
+import {ticketsUpdate} from '../redux/actions'
+
 class Routes extends React.Component {
     render(){
         return (
             <Router>
                 {/* <Scene key="root">
-                    <Scene key="pinVerifyScreen" component={PINVerifyScreen} hideNavBar={true} />
+                    <Scene onEnter={()=>{
+                        console.log('dkjsn')
+                        updateTravelHistory(585195537202)
+                            .then(res=>{
+                                if(res.status === true){
+                                    this.props.dispatch(ticketsUpdate(res.travelHistory))
+                                }
+                            })
+                    }} key="travelHistoryScreen" component={TravelHistoryScreen} hideNavBar={true} />
                 </Scene> */}
                 <Scene 
                     key="root"
@@ -29,7 +40,14 @@ class Routes extends React.Component {
                         <Scene key="ticketsScreen" component={TicketsScreen} hideNavBar={true} />
                         <Scene key="pinVerifyScreen" component={PINVerifyScreen} hideNavBar={true} />
                         <Scene key="trackBusScreen" component={TrackBusScreen} hideNavBar={true} />
-                        <Scene key="travelHistoryScreen" component={TravelHistoryScreen} hideNavBar={true} />
+                        <Scene onEnter={()=>{
+                            updateTravelHistory(this.props.userDetails.uid)
+                                .then(res=>{
+                                    if(res.status === true){
+                                        this.props.dispatch(ticketsUpdate(res.travelHistory))
+                                    }
+                                })
+                        }} key="travelHistoryScreen" component={TravelHistoryScreen} hideNavBar={true} />
                         <Scene key="profileScreen" component={ProfileScreen} hideNavBar={true} />
                         <Scene key="walletScreen" component={WalletScreen} hideNavBar={true} />
                     </Scene>

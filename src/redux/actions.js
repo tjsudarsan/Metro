@@ -4,10 +4,19 @@ export const loadUserDetails = (data) => ({
     payload: data
 })
 
-export const updateTravelHistory = (ticket,walletAmount) => ({
+export const updateTravelHistory = (ticket) => ({
     type: 'UPDATE_TRAVEL_HISTORY',
-    payload: ticket,
-    walletAmount
+    payload: ticket
+})
+
+export const ticketsUpdate = (travelHistory) => ({
+    type: 'TICKETS_UPDATE',
+    payload: travelHistory
+})
+
+export const updateWalletAmount = (walletAmount) => ({
+    type: 'UPDATE_WALLET_AMOUNT',
+    payload: walletAmount
 })
 
 export const ticketingFareFromAndToTemp = (fare,from,to) => ({

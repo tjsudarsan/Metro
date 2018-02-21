@@ -5,7 +5,7 @@ import {Actions} from 'react-native-router-flux';
 import Header from '../../components/Header';
 import PrimaryButton from '../../components/PrimaryButton'
 import {checkPIN, ticketGeneration} from '../../services'
-import {updateTravelHistory} from '../../redux/actions'
+import {updateTravelHistory, updateWalletAmount} from '../../redux/actions'
 
 class PINVerifyScreen extends React.Component {
     state={
@@ -30,8 +30,9 @@ class PINVerifyScreen extends React.Component {
                                 'Ticket Generated Successfully',
                                 [{text: 'OK'}]
                             )
-                            this.props.dispatch(updateTravelHistory(res.ticket,res.walletAmount));
-                            Actions.dashboardScreen();
+                            this.props.dispatch(updateTravelHistory(res.ticket));
+                            this.props.dispatch(updateWalletAmount(res.walletAmount));
+                            Actions.travelHistoryScreen();
                         }else{
                             Alert.alert(
                                 'Attention!',
