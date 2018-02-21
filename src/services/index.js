@@ -1,5 +1,5 @@
-// const baseURL = 'https://mtcticketing.herokuapp.com';
-const baseURL = 'http://192.168.43.186:4000'
+const baseURL = 'https://mtcticketing.herokuapp.com';
+// const baseURL = 'http://192.168.43.186:4000'
 
 export async function checkAadhaar(uid){
     console.log(uid)
