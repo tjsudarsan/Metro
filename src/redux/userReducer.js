@@ -1,4 +1,3 @@
-
 const defaultState = {
 	_id: null,
 	uid : null,
@@ -29,6 +28,9 @@ export default (state = defaultState, actions) => {
 
 		case 'TICKETS_UPDATE':
 			return {...state, travelHistory: actions.payload}
+		
+		case 'LOGOUT':
+			return {...state, isLoggedIn: false}
 
         default:
             return state;

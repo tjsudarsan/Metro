@@ -21,15 +21,7 @@ class Routes extends React.Component {
         return (
             <Router>
                 {/* <Scene key="root">
-                    <Scene onEnter={()=>{
-                        console.log('dkjsn')
-                        updateTravelHistory(585195537202)
-                            .then(res=>{
-                                if(res.status === true){
-                                    this.props.dispatch(ticketsUpdate(res.travelHistory))
-                                }
-                            })
-                    }} key="travelHistoryScreen" component={TravelHistoryScreen} hideNavBar={true} />
+                    <Scene key="profileScreen" component={ProfileScreen} hideNavBar={true} />
                 </Scene> */}
                 <Scene 
                     key="root"
@@ -53,7 +45,7 @@ class Routes extends React.Component {
                     </Scene>
                 
                     <Scene key="auth" initial>
-                        <Scene key="welcomeScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={WelcomeScreen} hideNavBar={true} initial />
+                        <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} initial />
                         <Scene key="loginScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={LoginScreen} hideNavBar={true} />
                         <Scene key="registerScreen" onEnter={()=>this.props.userDetails.isLoggedIn ? Actions.main() : {} } component={RegisterScreen} hideNavBar={true} />
                     </Scene>

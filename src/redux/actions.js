@@ -27,3 +27,7 @@ export const ticketingFareFromAndToTemp = (fare,from,to) => ({
         to
     }
 })
+
+export const logout = (data) => ({
+    type: 'LOGOUT'
+})
