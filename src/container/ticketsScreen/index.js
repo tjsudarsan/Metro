@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { View, Text, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, ScrollView, Alert, Picker } from 'react-native';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import {busStops} from '../../assests/busStops.json';
@@ -12,6 +12,7 @@ class TicketsScreen extends React.Component {
         toLocation: '',
         isFareLoading: false,
         fare : null,
+        noOfTickets: 1,
         fromList: [],
         toList: [],
         fromSelected: false,
@@ -127,7 +128,7 @@ class TicketsScreen extends React.Component {
     }
 
     handlePay(){
-        this.props.dispatch(ticketingFareFromAndToTemp(this.state.fare,this.state.fromLocation,this.state.toLocation));
+        this.props.dispatch(ticketingFareFromAndToTemp(this.state.fare * this.state.noOfTickets,this.state.fromLocation,this.state.toLocation,this.state.noOfTickets));
         Actions.pinVerifyScreen();
     }
 
@@ -181,13 +182,35 @@ class TicketsScreen extends React.Component {
                         />
                     </View>
                 </View>
+                <View style={styles.noOfTicketsContainer}>
+                    <Text style={styles.noOfTicketsText}>No of Tickets: </Text>
+                    <View style={styles.noOfTicketsPicker}>
+                        <Picker
+                            style={{width: 75,color: '#b90000'}}
+                            mode="dropdown"
+                            selectedValue={this.state.noOfTickets}
+                            onValueChange={(itemValue)=>this.setState({noOfTickets: itemValue})}
+                        >
+                            <Picker.Item label={"1"} value={1} />
+                            <Picker.Item label={"2"} value={2} />
+                            <Picker.Item label={"3"} value={3} />
+                            <Picker.Item label={"4"} value={4} />
+                            <Picker.Item label={"5"} value={5} />
+                            <Picker.Item label={"6"} value={6} />                            
+                            <Picker.Item label={"7"} value={7} />
+                            <Picker.Item label={"8"} value={8} />
+                            <Picker.Item label={"9"} value={9} />
+                            <Picker.Item label={"10"} value={10} />
+                        </Picker>
+                    </View>
+                </View>
                 <View style={styles.fareDisplay}>
                     {this.state.isFareLoading ? 
                         <ActivityIndicator size={60} color="#b90000" />
                         :
                         <Fragment>
                             {this.state.fare !== null ? 
-                                <Text style={styles.fare}>{`₹ ${this.state.fare}/-`}</Text>
+                                <Text style={styles.fare}>{`₹ ${this.state.fare * this.state.noOfTickets}/-`}</Text>
                                 :
                                 <Text>Please select 'From' and 'To'</Text>
                             }
@@ -269,6 +292,21 @@ const styles = StyleSheet.create({
         bottom: 10,
         width: 300,
         paddingLeft: 10
+    },
+    noOfTicketsContainer: {
+        flexDirection: 'row',
+        marginTop: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noOfTicketsText: {
+        color: '#b90000',
+        flex: 2,
+        textAlign: 'center',
+        fontSize: 18
+    },
+    noOfTicketsPicker: {
+        flex: 1,
     }
 });
 

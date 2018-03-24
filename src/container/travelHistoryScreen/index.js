@@ -19,6 +19,7 @@ class TravelHistoryScreen extends React.Component {
                                         <Text style={styles.ticketText}><Text style={styles.ticketLabel}>Ticket Number:</Text> {ticket.ticketNo}</Text>
                                         <Text style={styles.ticketText}><Text style={styles.ticketLabel}>From:</Text> {ticket.fromLocation}</Text>
                                         <Text style={styles.ticketText}><Text style={styles.ticketLabel}>To:</Text> {ticket.toLocation}</Text>
+                                        <Text style={styles.ticketText}><Text style={styles.ticketLabel}>No of Tickets:</Text> {ticket.noOfTickets}</Text>
                                         <Text style={styles.ticketText}><Text style={styles.ticketLabel}>Fare:</Text> {`₹ ${ticket.fare}/-`}</Text>
                                     </View>
                                     <View style={styles.ticketTime}>

@@ -3,6 +3,7 @@ const defaultState = {
     fare: null,
     from: null,
     to: null,
+    noOfTickets: 1
 }
 
 export default (state=defaultState,actions) => {

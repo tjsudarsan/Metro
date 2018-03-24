@@ -19,12 +19,13 @@ export const updateWalletAmount = (walletAmount) => ({
     payload: walletAmount
 })
 
-export const ticketingFareFromAndToTemp = (fare,from,to) => ({
+export const ticketingFareFromAndToTemp = (fare,from,to,noOfTickets) => ({
     type : 'FARE_FROM_AND_TO',
     payload : {
         fare,
         from,
-        to
+        to,
+        noOfTickets
     }
 })
 

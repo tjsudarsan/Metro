@@ -22,7 +22,8 @@ class PINVerifyScreen extends React.Component {
                         this.props.userDetails.uid,
                         this.props.tempDetails.from,
                         this.props.tempDetails.to,
-                        this.props.tempDetails.fare
+                        this.props.tempDetails.fare,
+                        this.props.tempDetails.noOfTickets
                     ).then(res=>{
                         if(res.status === true){
                             Alert.alert(

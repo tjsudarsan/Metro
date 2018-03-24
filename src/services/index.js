@@ -106,7 +106,7 @@ export async function checkPIN(uid,pinNumber) {
     return result;
 }
 
-export async function ticketGeneration(uid,from,to,fare) {
+export async function ticketGeneration(uid,from,to,fare,noOfTickets) {
     var result = await fetch(baseURL + '/ticketing',{
         method: "POST",
         headers: {
@@ -117,7 +117,8 @@ export async function ticketGeneration(uid,from,to,fare) {
             uid,
             from,
             to,
-            fare
+            fare,
+            noOfTickets
         })
     }).then(res => res.json());
 
