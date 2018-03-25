@@ -33,7 +33,7 @@ class PINVerifyScreen extends React.Component {
                             )
                             this.props.dispatch(updateTravelHistory(res.ticket));
                             this.props.dispatch(updateWalletAmount(res.walletAmount));
-                            Actions.travelHistoryScreen();
+                            Actions.replace('travelHistoryScreen');
                         }else{
                             Alert.alert(
                                 'Attention!',

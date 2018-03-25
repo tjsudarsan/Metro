@@ -18,8 +18,8 @@ class ProfileScreen extends React.Component {
                     <Text style={styles.userDetails}>Phone Number: <Text style={{color: 'black'}}>{this.props.userDetails.phoneNumber}</Text></Text>
                     <Text style={styles.userDetails}>Wallet Balance: <Text style={{color: 'black'}}>₹ {this.props.userDetails.walletAmount}/-</Text></Text>
                     <PrimaryButton label={"Logout"} onPress={() => {
+                        Actions.reset('auth');
                         this.props.dispatch(logout())
-                        Actions.auth();
                     }} />
                </View>
             </Fragment>
@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: 50
+        paddingTop: 50,
+        backgroundColor: 'white'
         // justifyContent: 'center'
     },
     userDetails: {
