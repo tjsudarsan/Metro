@@ -24,7 +24,7 @@ class DashboardScreen extends React.Component {
                     <View style={styles.infoLeftContainer}>
                         <Text style={styles.userNameStyle}>{this.props.userDetails.fullName}</Text>
                     </View>
-                    <TouchableOpacity activeOpacity={1} style={styles.infoRightContainer}>
+                    <TouchableOpacity onPress={()=>Actions.walletScreen()} activeOpacity={1} style={styles.infoRightContainer}>
                         <Image source={walletIcon}  style={{height: 20, width: 20}}/>
                         <Text style={{color: 'black'}}>₹ {this.props.userDetails.walletAmount}</Text>
                     </TouchableOpacity>

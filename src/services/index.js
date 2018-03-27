@@ -139,3 +139,19 @@ export async function updateTravelHistory(uid) {
 
     return result;
 }
+
+export async function walletRecharge(uid,loadAmount) {
+    var result = await fetch(baseURL + '/walletrecharge',{
+        method: "POST",
+        headers: {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            uid,
+            loadAmount
+        })
+    }).then(res => res.json());
+
+    return result;
+}

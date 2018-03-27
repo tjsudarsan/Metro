@@ -3,6 +3,7 @@ package com.mtcticketing;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.razorpay.rn.RazorpayPackage;
 import com.showlocationservicesdialogbox.LocationServicesDialogBoxPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RazorpayPackage(),
             new LocationServicesDialogBoxPackage(),
           new MapsPackage()
       );

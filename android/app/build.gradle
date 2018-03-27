@@ -96,6 +96,16 @@ def enableProguardInReleaseBuilds = false
 android {
     compileSdkVersion 23
     buildToolsVersion '27.0.3'
+    subprojects {
+        afterEvaluate {project ->
+            if (project.hasProperty("android")) {
+                android {
+                    compileSdkVersion 25
+                    buildToolsVersion '25.0.0'
+                }
+            }
+        }
+    }
 
     defaultConfig {
         applicationId "com.mtcticketing"
@@ -146,6 +156,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-razorpay')
     compile project(':react-native-android-location-services-dialog-box')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"

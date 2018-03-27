@@ -21,7 +21,7 @@ class Routes extends React.Component {
         return (
             <Router>
                 {/* <Scene key="root">
-                    <Scene key="ticketsScreen" component={TicketsScreen} hideNavBar={true} />
+                    <Scene key="walletScreen" component={WalletScreen} hideNavBar={true} />
                 </Scene> */}
                 <Scene 
                     key="root"
